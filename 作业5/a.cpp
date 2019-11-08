@@ -1,5 +1,5 @@
+//注：这份代码是面向OJ写的，本地测试99%会出错
 #include<iostream>
-//#include<fstream>
 #include<string>
 using namespace std;
 void getNext(string &p, int *next) {
@@ -41,7 +41,6 @@ int main()
 {
     string s1, s2;
     int *next;
-    //ifstream in("out.txt");
      
     getline(cin, s1);
     getline(cin, s2);
@@ -49,8 +48,7 @@ int main()
     next = new int[s2.length() + 2];
     getNext(s2, next);
     if (!KMP(s1, s2, next))cout << "false";
-    //in.close();
-    //system("pause");
+
     return 0;
 }
 /*
