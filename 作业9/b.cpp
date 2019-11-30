@@ -20,12 +20,23 @@ struct Edge{
 };
 Edge *edges;
 int d[maxn];
+int val[maxn];
+int n,m;
+void search(int node){
+    for(int i=0;i<m;i++){
+        if(edges[i].x==node){
+            val[edges[i].x]++;
+            search(edges[i].y);
+        }
+    }
+}
 int main()
 {
-    int n,m;
+    
     cin>>n>>m;
     for(int i=0;i<n;i++){
         d[i]=0;
+        val[i]=0;
     }
     edges=new Edge[m];
     for(int i=0;i<m;i++){
@@ -37,11 +48,17 @@ int main()
         cout<<edges[i].x<<' '<<edges[i].y<<endl;
     }
     sort(edges,edges+m);
+    for(int i=0;i<n;i++){
+        if(d[i]==1){
+            search(i);
+        }
+    }
 
+/*
     for(int i=0;i<m;i++){
         cout<<edges[i].x<<' '<<edges[i].y<<endl;
     }
-
+*/
     return 0;
 }
 /*

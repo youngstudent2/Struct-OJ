@@ -34,9 +34,7 @@ int main()
 		node2 tmpNode2(time, tmp);
 		++time;
 		pre1 = set1.lower_bound(tmpNode1);
-		//suc1=set1.upper_bound(tmpNode1);
 		pre2 = set2.lower_bound(tmpNode2);
-		//suc2=set2.upper_bound(tmpNode2);
 		if (pre1 == set1.end())printf("%d ", pre2->val);
 		else if (pre2 == set2.end())printf("%d ", pre1->val);
 		//cout << *pre1 << *pre2 << endl;

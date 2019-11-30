@@ -2,7 +2,6 @@
 #include<vector>
 #include<algorithm>
 using namespace std;
-//思路：种类并查集+二分法
 struct BadGuys{
     int g1,g2;
     int val;
