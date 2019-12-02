@@ -1,8 +1,5 @@
 #include<iostream>
-#include<vector>
-#include<algorithm>
 using namespace std;
-#define maxn 50000
 struct Edge{
     int x,y;
     friend istream& operator>>(istream &in,Edge& e){
