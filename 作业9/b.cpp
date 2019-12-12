@@ -6,7 +6,7 @@ struct Edge{
         in>>e.x>>e.y;
         return in;
     }
-
+ 
 };
 int* find(int n,int m,Edge *edges){
     int num=n;
@@ -19,8 +19,8 @@ int* find(int n,int m,Edge *edges){
     int *d=new int[n];
     int *w=new int[n];
     for (int i = 0; i < n; i++) {
-		d[i] = 0; w[i] = 0;
-	}
+        d[i] = 0; w[i] = 0;
+    }
     for(int i=0;i<m;i++){
         int x=edges[i].x;
         int y=edges[i].y;
@@ -31,7 +31,6 @@ int* find(int n,int m,Edge *edges){
         if(d[i]==1)
             res[count++]=i;
     }
-    //count should be tail
     for(int i=0;n>2;i=0){
         for(int j=0;j<count;++j,--n){
             const int dest=w[res[j]];
@@ -44,7 +43,7 @@ int* find(int n,int m,Edge *edges){
     res[count]=-1;
     return res;
 }
-
+ 
 int main()
 {
     Edge *edges;
@@ -55,7 +54,7 @@ int main()
     for(int i=0;i<m;i++){
         cin>>edges[i];
     }
-
+ 
     int *res;;
     res=find(n,m,edges);
     if (*(res+1)==-1) {
@@ -65,7 +64,7 @@ int main()
         if (res[0] < res[1])cout << res[0] << ' ' << res[1];
         else cout << res[1] << ' ' << res[0];
     }
-
+ 
     return 0;
 }
 /*

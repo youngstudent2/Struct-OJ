@@ -27,12 +27,13 @@ public:
     RBTree():root(NULL);
     RBNode<K,V>* insert(const K&key,const V&value);
     RBNode<K,V>* search(const K&key);
-    RBNode<K,V>* predecessor(RBNode<K,V>* node)const;
-    RBNode<K,V>* successor(RBNode<K,V>* node)  const;
+
     bool remove(const K&key);
     void inOrder();
     
 private:
+    RBNode<K,V>* predecessor(RBNode<K,V>* node)const;
+    RBNode<K,V>* successor(RBNode<K,V>* node)  const;
     void insertFixUp(RBNode<K,V>* &parent,RBNode<K,V>* &cur);
     void removeFixUp(RBNode<K,V>* node);
     void leftRotate(RBNode<K,V>* &node);
@@ -40,6 +41,7 @@ private:
     void check(RBNode<K,V>* &parent,RBNode<K,V>* &cur);
     void inOrderVisit(RBNode<K,V>* root);
 };
+
 template<class K,class V>
 RBNode<K,V>* RBTree<K,V>::search(const K&key){
     RBNode<k,V>* cur=root;
@@ -50,6 +52,14 @@ RBNode<K,V>* RBTree<K,V>::search(const K&key){
             cur=cur->right;
     }
     return cur;
+}
+
+template<class K,class V>
+RBNode<K,V>* RBTree<K,V>::successor(RBNode<K,V>* node)const{
+    RBNode<K,V>* tmp=node->right;
+    while(tmp->left)
+        tmp=tmp->left;
+    return tmp;
 }
 template<class K,class V>
 RBNode<K,V>* RBTree<K,V>::insert(const K&key,const V&value){
@@ -156,7 +166,6 @@ bool RBTree<K,V>::remove(const K& key){
             parent->left=NULL;
         else
             parent->right=NULL;
-        delete tmp;
     }
     else if(subL==NULL){
         if(parent->left==tmp)
@@ -164,7 +173,6 @@ bool RBTree<K,V>::remove(const K& key){
         else
             parent->right=subR;
         subR->parent=parent;
-        delete tmp;
     }
     else if(subR==NULL){
         if(parent->left==tmp)
@@ -172,10 +180,53 @@ bool RBTree<K,V>::remove(const K& key){
         else
             parent->right=subL;
         subL->parent=parent;
-        delete tmp;
     }
     else{
+        RBNode<K,V>* suc=successor(tmp);
+        if(tmp==parent->left){
+            parent->left=suc;
+            suc->right=tmp->right;
+            suc->left=tmp->left;
+            suc->parent=parent;
+            suc->color=tmp->color;
+            if(suc->right){
+                parent->left=suc->right;
+                suc->right->parent=parent;
+            }
+        }
+        else{
+            parent->right=suc;
+            suc->right=tmp->right;
+            suc->left=tmp->left;
+            suc->parent=parent;
+            suc->color=tmp->color;
+            if(suc->right){
+                parent->left=suc->right;
+                suc->right->parent=parent
+            }
+        }
+
+        removeFixUp(tmp);
         
+    }
+
+    delete tmp;
+    return true;
+}
+
+template<class K,class V>
+void removeFixUp(RBNode<K,V>* node){
+    if(tmp->color==RED)
+        return;
+    while(node!=root&&node->color==BLACK){
+        if(node==node->parent->left){
+            RBNode<K,V>* tmp=node->parent->right;
+            if(tmp->color==RED){
+                tmp->color=BLACK;
+                node->parent->color=RED;
+                leftRotate()
+            }
+        }
     }
 }
 
