@@ -1,21 +1,21 @@
 #include<iostream>
 #include<cstdlib>
 #include<cstring>
+#include<vector>
 using namespace std;
 struct node
 {
 	int k;//记录当前结点编号 
 	struct node *next;
 }*v;
-int ans = 0; int *ru;
-int pocket[26];
+int *ru;
 char *coin;
-bool *visit;
-int *top_order;
+int *topOrder;
 int k=0;
-int cmp(const void *a, const void *b) {
-	return *(int*)b - *(int*)a;
+inline int max(int a,int b){
+	return a>b?a:b;
 }
+
 int topsort(int n)
 {
 	int i;
@@ -28,7 +28,7 @@ int topsort(int n)
 	{
 		++c;
 		p = &v[stack[top--]];        //取出栈顶元素 
-		top_order[k++]=p->k;
+		topOrder[k++]=p->k;
 		while (p->next != NULL)       //枚举该点所有后继 
 		{
 			p = p->next;
@@ -39,27 +39,7 @@ int topsort(int n)
 	}
 	return c==n;
 }
-void check() {
-	for (int i = 0; i < 26; i++) {
-		if (pocket[i] > ans) {
-			ans = pocket[i];
-		}
-	}
-}
-void search(node *v) {
-	node *p = v->next;
-	
-	int c = coin[v->k];
-	pocket[c]++;
-	if (p == NULL) {
-		check();
-	}
-	else while (p) {
-		search(p);
-		p = p->next;
-	}
-	pocket[c]--;
-}
+
 
 
 int main()
@@ -70,8 +50,7 @@ int main()
 	scanf("%d%d", &n, &m);
 	ru = (int*)malloc(sizeof(int)*n);
 	v = (struct node*)malloc(sizeof(struct node)*n);
-	visit = (bool*)malloc(sizeof(int)*n);
-	top_order = (int*)malloc(sizeof(int)*n);
+	topOrder = (int*)malloc(sizeof(int)*n);
 	coin = new char[n];
 	cin >> coin;
 	for (int i = 0; i < n; i++)
@@ -81,7 +60,6 @@ int main()
 		ru[i] = 0;
 		v[i].k = i;
 		v[i].next = NULL;
-		visit[i]=false;
 	}
 	for (i = 0; i < m; i++)
 	{
@@ -95,17 +73,45 @@ int main()
 		pp->k = b;
 		p->next = pp;
 	}
+
 	if (!topsort(n)) {
 		printf("-1");
 		return 0;
 	}
 
-	for (int i = 0; i < 26; i++)
-		pocket[i] = 0;
+	int **f=(int**)malloc(sizeof(int*)*26);
+	for(int i=0;i<26;i++){
+		f[i]=new int[n];
+		for(int j=0;j<n;j++)f[i][j]=0;
+	}
+	for(int i=0;i<n;i++)f[coin[i]][i]=1;
+	for(int i=0;i<n;i++){
+		p=v+topOrder[i];
+		pp=p->next;
+		while(pp){
+			int c1=coin[pp->k];
+			int c2=coin[p->k];
+			if(c1==c2)
+				f[c1][pp->k]=max(f[c1][pp->k],f[c1][p->k]+1);
+			else{
+				f[c1][pp->k]=max(f[c1][pp->k],f[c1][p->k]);
+				f[c2][pp->k]=max(f[c2][pp->k],f[c2][p->k]+1);
+			}
+			
+			pp=pp->next;
+		}
 
-	for (int i = 0; i < n; i++)
-		search(v + i);
-
+	}
+	int ans=0;
+	for(int i=0;i<n;i++){
+		const int tmp = f[coin[i]][i];
+		if(tmp>ans)ans=tmp;
+	}
+/*
+	for(int i=0;i<26;i++,cout<<endl)
+		for(int j=0;j<n;j++)
+			cout<<f[i][j]<<' ';
+*/
 	printf("%d",ans);
 
 	return 0;
@@ -125,4 +131,26 @@ abc
 1 2
 2 3
 3 1
+
+5 6
+bcaaa
+1 3
+1 2
+1 4
+2 3
+3 5
+4 2
+
+8 10
+bcaaabab
+1 3
+1 2
+1 4
+2 3
+3 5
+4 2
+4 6
+6 7
+7 8
+8 2
 */
