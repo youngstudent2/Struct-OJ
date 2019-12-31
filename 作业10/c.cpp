@@ -109,14 +109,6 @@ int main()
 				else //p's coin is available
 					f[c][p->k] = max(f[c][p->k], f[c][pp->k] + 1);
 			}
-			/*
-			if (c1 == c2)
-				f[c1][p->k] = max(f[c1][p->k], f[c1][pp->k] + 1);
-			else {
-				f[c1][p->k] = max(f[c1][p->k], f[c1][pp->k]);
-				f[c2][p->k] = max(f[c2][p->k], f[c2][pp->k] + 1);
-			}
-			*/
 			pp = pp->next;
 		}
 

@@ -3,18 +3,6 @@
 #include<algorithm>
 using namespace std;
 #define INF 32767	//INF表示∞
-/*
-struct Edge {
-	int s, e, l, c;
-	Edge(int a, int b, int x, int d) :s(a), e(b), l(x), c(d) {}
-	bool operator<(const Edge &edge) {
-		if (s < edge.s)return true;
-		else if (s > edge.s)return false;
-		else {
-			return e < edge.e;
-		}
-	}
-};*/
 typedef struct  				
 {
 	int **edges; 		        
@@ -55,10 +43,9 @@ int* Dijkstra(MGraph &g, int v, int **&driver)
 		if (u < n) {
 			for (j = 0; j < n; j++)     	
 				if (s[j + n] == 0)
-					if (g.edges[u][j] < INF && dist[u] + g.edges[u][j] < dist[j + n] && 2==driver[u][j])
+					if (g.edges[u][j] < INF && dist[u] + g.edges[u][j] < dist[j + n] && 2 == driver[u][j])
 					{
 						dist[j + n] = dist[u] + g.edges[u][j];
-						//path[j]=u;
 					}
 		}
 		else {
@@ -67,7 +54,6 @@ int* Dijkstra(MGraph &g, int v, int **&driver)
 					if (g.edges[u - n][j] < INF && dist[u] + g.edges[u - n][j] < dist[j] && 1 == driver[u-n][j])
 					{
 						dist[j] = dist[u] + g.edges[u - n][j];
-						//path[j]=u;
 					}
 		}
 	}
@@ -88,18 +74,12 @@ void inputHandle(int &n, MGraph &g, int** &driver) {
 		}
 	}
 	int s, e, l, c;
-	//vector<Edge> edges;
 	for (int i = 0; i < m; i++) {
 		cin >> s >> e >> l >> c;
-		//edges.push_back(Edge(s,e,l,c));
 		g.edges[s][e] = l;
 		driver[s][e] = c;
 	}
-	/*
-	sort(edges.begin(),edges.end());
-	for(auto& e:edges){
-		cout<<e.s<<' '<<e.e<<' '<<e.l<<' '<<e.c<<endl;
-	}*/
+
 }
 int main()
 {
