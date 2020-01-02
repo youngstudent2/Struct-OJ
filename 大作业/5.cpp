@@ -17,6 +17,7 @@ inline int Min(int a,int b){
 
 inline void inputHandle(int &n,int *&income){
     cin>>n;
+    income=new int[n];
     for(int i=0;i<n;++i)
         cin>>income[i];
 }
@@ -69,3 +70,11 @@ int main()
     cout<<maxBreak(eles,eleNum);
     return 0;
 }
+/*
+5	
+10000
+40000
+8000
+60000
+28000
+*/
