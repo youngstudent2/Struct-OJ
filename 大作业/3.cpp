@@ -34,9 +34,6 @@ public:
                 p->next=new Node(val);
                 p->next->next=tmpNext;
 
-                
-
-
                 break;
             }
         }
@@ -61,12 +58,12 @@ int main()
     int x;
     while(scanf("%s",s)){
         if(s[0]=='C'){  //s=="Check"
-            minHeap.print();
+            list.print();
         }
         else{
             sscanf(s,"%d",&x);
             printf("%d",x);
-            minHeap.insert(x);
+            list.push(x);
         }
     }
 
