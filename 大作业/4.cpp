@@ -124,12 +124,6 @@ public:
 		for (int i = 0; i < k; i++) {
 			res[i] = (this->*hashFunc[i])(str) % (unsigned)m;
 		}
-		/*
-		cout << "Hash result: ";
-		for (int i = 0; i < k; i++) {
-			cout << res[i] << ' ';
-		}
-		cout << endl;*/
 		return res;
 	}
 };

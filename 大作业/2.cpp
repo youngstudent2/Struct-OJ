@@ -191,7 +191,7 @@ int main()
             else
                 minHeap.insert(x);
         }
-        if(i&1)
+        if(i&1)  //计算中位数
             ans=(minHeap.top().val+maxHeap.top().val)/2;
         else
             ans=minHeap.top().val;
@@ -200,7 +200,6 @@ int main()
         //cout<<"ans:"<<ans<<endl;
         cout<<ans<<endl;
     }
-    //cout<<ans<<endl;
     return 0;
 }
 /*
